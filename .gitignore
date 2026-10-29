@@ -5,3 +5,5 @@ __pycache__/
 test-results/
 report.html
 .env
+ui-report.html
+api-report.html
