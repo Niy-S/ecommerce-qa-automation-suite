@@ -26,3 +26,13 @@ def test_sorting(inventory, option):
     else:
         prices = _prices(inventory)
         assert prices == sorted(prices, reverse=True)
+
+
+def test_sort_name_z_to_a(inventory):
+    expect(inventory.items).to_have_count(6)
+    inventory.sort_by("za")
+
+    names = inventory.item_names.all_text_contents()
+    assert names == sorted(names, reverse=True)
+    assert names[0] == "Test.allTheThings() T-Shirt (Red)"
+    assert names[-1] == "Sauce Labs Backpack"

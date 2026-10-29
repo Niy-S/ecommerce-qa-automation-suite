@@ -47,3 +47,25 @@ def test_order_total_equals_item_total_plus_tax(at_checkout_info, checkout_page)
     total = _money(checkout_page.total.inner_text())
 
     assert total == pytest.approx(item_total + tax, abs=0.01)
+
+
+def test_cancel_checkout_returns_to_cart_with_items(
+    page, at_checkout_info, checkout_page, cart_page
+):
+    checkout_page.cancel_btn.click()
+    expect(page).to_have_url(re.compile(r".*/cart\.html"))
+    expect(cart_page.items).to_have_count(1)
+
+
+def test_post_order_state_resets_cart(
+    page, at_checkout_info, checkout_page, inventory
+):
+    checkout_page.fill_info("Niyati", "Sangharajka", "400001")
+    checkout_page.finish_btn.click()
+    expect(checkout_page.complete_header).to_have_text("Thank you for your order!")
+
+    page.locator('[data-test="back-to-products"]').click()
+    expect(inventory.cart_badge).to_have_count(0)
+    expect(
+        page.locator('[data-test="add-to-cart-sauce-labs-backpack"]')
+    ).to_be_visible()

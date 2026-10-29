@@ -7,6 +7,7 @@ class CheckoutPage:
         self.continue_btn = page.locator('[data-test="continue"]')
         self.finish_btn = page.locator('[data-test="finish"]')
         self.error = page.locator('[data-test="error"]')
+        self.cancel_btn = page.locator('[data-test="cancel"]')
         self.complete_header = page.locator('[data-test="complete-header"]')
         self.item_total = page.locator('[data-test="subtotal-label"]')
         self.tax = page.locator('[data-test="tax-label"]')
